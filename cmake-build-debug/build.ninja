@@ -11,7 +11,7 @@
 # =============================================================================
 
 # =============================================================================
-# Project: untitled
+# Project: sudoku
 # Configurations: Debug
 # =============================================================================
 
@@ -41,37 +41,43 @@ include CMakeFiles/rules.ninja
 
 cmake_ninja_workdir = C$:/Users/Benedikt/Development/c-workspace/untitled/cmake-build-debug/
 # =============================================================================
-# Object build statements for EXECUTABLE target untitled
+# Object build statements for EXECUTABLE target sudoku
 
 
 #############################################
-# Order-only phony target for untitled
+# Order-only phony target for sudoku
 
-build cmake_object_order_depends_target_untitled: phony || .
+build cmake_object_order_depends_target_sudoku: phony || .
 
-build CMakeFiles/untitled.dir/main.c.obj: C_COMPILER__untitled_unscanned_Debug C$:/Users/Benedikt/Development/c-workspace/untitled/main.c || cmake_object_order_depends_target_untitled
-  DEP_FILE = CMakeFiles\untitled.dir\main.c.obj.d
-  FLAGS = -g -std=gnu2x -fdiagnostics-color=always
-  OBJECT_DIR = CMakeFiles\untitled.dir
-  OBJECT_FILE_DIR = CMakeFiles\untitled.dir
+build CMakeFiles/sudoku.dir/main.c.obj: C_COMPILER__sudoku_unscanned_Debug C$:/Users/Benedikt/Development/c-workspace/untitled/main.c || cmake_object_order_depends_target_sudoku
+  DEP_FILE = CMakeFiles\sudoku.dir\main.c.obj.d
+  FLAGS = -Wall -g -std=gnu11 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\sudoku.dir
+  OBJECT_FILE_DIR = CMakeFiles\sudoku.dir
+
+build CMakeFiles/sudoku.dir/solver.c.obj: C_COMPILER__sudoku_unscanned_Debug C$:/Users/Benedikt/Development/c-workspace/untitled/solver.c || cmake_object_order_depends_target_sudoku
+  DEP_FILE = CMakeFiles\sudoku.dir\solver.c.obj.d
+  FLAGS = -Wall -g -std=gnu11 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\sudoku.dir
+  OBJECT_FILE_DIR = CMakeFiles\sudoku.dir
 
 
 # =============================================================================
-# Link build statements for EXECUTABLE target untitled
+# Link build statements for EXECUTABLE target sudoku
 
 
 #############################################
-# Link the executable untitled.exe
+# Link the executable sudoku.exe
 
-build untitled.exe: C_EXECUTABLE_LINKER__untitled_Debug CMakeFiles/untitled.dir/main.c.obj
-  FLAGS = -g
+build sudoku.exe: C_EXECUTABLE_LINKER__sudoku_Debug CMakeFiles/sudoku.dir/main.c.obj CMakeFiles/sudoku.dir/solver.c.obj
+  FLAGS = -Wall -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
-  OBJECT_DIR = CMakeFiles\untitled.dir
+  OBJECT_DIR = CMakeFiles\sudoku.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
-  TARGET_FILE = untitled.exe
-  TARGET_IMPLIB = libuntitled.dll.a
-  TARGET_PDB = untitled.exe.dbg
+  TARGET_FILE = sudoku.exe
+  TARGET_IMPLIB = libsudoku.dll.a
+  TARGET_PDB = sudoku.exe.dbg
 
 
 #############################################
@@ -99,7 +105,7 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 # =============================================================================
 # Target aliases.
 
-build untitled: phony untitled.exe
+build sudoku: phony sudoku.exe
 
 # =============================================================================
 # Folder targets.
@@ -109,7 +115,7 @@ build untitled: phony untitled.exe
 #############################################
 # Folder: C:/Users/Benedikt/Development/c-workspace/untitled/cmake-build-debug
 
-build all: phony untitled.exe
+build all: phony sudoku.exe
 
 # =============================================================================
 # Built-in targets

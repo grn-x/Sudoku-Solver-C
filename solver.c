@@ -5,24 +5,6 @@
 char BLANK_TILE;
 
 
-void debug_printBoard(char board[9][9]) {
-    printf("+-----------------------+\n");
-    for (int row = 0; row < 9; row++) {
-        printf("| ");
-        for (int col = 0; col < 9; col++) {
-            printf("%c ", board[row][col]);
-            if (col % 3 == 2 && col != 8) {
-                printf("| ");
-            }
-        }
-        printf("|\n");
-        if (row % 3 == 2 && row != 8) {
-            printf("|-----------------------|\n");
-        }
-    }
-    printf("+-----------------------+\n");
-}
-
 int tileValue(char board[9][9], int row, int col) {
     /* get the integer value of a tile
     return -1 if the tile is empty */
@@ -40,7 +22,6 @@ char intToChar(int value) {
 }
 
 
-
 int colUsed(char board[9][9], int col) {
     int bits = 0;
     for (int row = 0; row < 9; row++) {  // Fixed: increment row
@@ -51,7 +32,6 @@ int colUsed(char board[9][9], int col) {
     }
     return bits;
 }
-
 
 int rowUsed(char board[9][9], int row) {
     int bits = 0;
@@ -71,6 +51,7 @@ int squareUsed(char board[9][9], int row, int col){
 // x= 0,1,2 -> 0; 3,4,5 -> 1; 6,7,8 -> 2
 //int top = row - (row % 3)/3; // (x/3)*3
 //int left = col - (col % 3)/3;
+//floor - cast
 
 int top = (row / 3) * 3;
 int left = (col / 3) * 3;
@@ -99,7 +80,7 @@ int getPossibleValues(char board[9][9], int row, int col, int possibleValuesRef[
     //or all the bits together and invert the result to get the possible values
         //possibleValuesRef = {0}; want to reinitialize the array, to avoid errors
     int index_pointer = 0;
-    for (int i = 0; i < 9; i++) { //TODO: move this loop inside solveRecursive function, to avoid looping twice (even be it with a smaller range)
+    for (int i = 1; i <= 9; i++) { //TODO: move this loop inside solveRecursive function, to avoid looping twice (even be it with a smaller range)
         if ((possibleBits >> i & 1) == 1) {//rightshift to move the i-th bit to the last place; AND with 1 (=0001) to
                                            // check if it is 1, in which case its a possible value
             possibleValuesRef[index_pointer++] = i;
@@ -139,7 +120,6 @@ bool solveRecursive(char board[][9] /*looks weird with first dimension omitted*/
             return true;
         }
         //remove value from potential square, col, row
-        //backtrack
     }
 
     board[row][col] = BLANK_TILE;
