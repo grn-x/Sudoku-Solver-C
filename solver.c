@@ -30,7 +30,6 @@ int tileValue(char board[9][9], int row, int col) {
         return -1;
     } else {
       //printf("board[row][col]: %c\n", board[row][col]);
-      printf("board at row: %d, col: %d: %c, to int: %i\n", row, col, board[row][col], board[row][col] - '0');
         return board[row][col] - '0';
     }
 }
@@ -101,7 +100,7 @@ int getPossibleValues(char board[9][9], int row, int col, int possibleValuesRef[
         //possibleValuesRef = {0}; want to reinitialize the array, to avoid errors
     int index_pointer = 0;
     for (int i = 0; i < 9; i++) { //TODO: move this loop inside solveRecursive function, to avoid looping twice (even be it with a smaller range)
-        if ((possibleBits >> i & 1) == 0) {//rightshift to move the i-th bit to the last place; AND with 1 (=0001) to
+        if ((possibleBits >> i & 1) == 1) {//rightshift to move the i-th bit to the last place; AND with 1 (=0001) to
                                            // check if it is 1, in which case its a possible value
             possibleValuesRef[index_pointer++] = i;
         } else {
@@ -129,15 +128,11 @@ bool solveRecursive(char board[][9] /*looks weird with first dimension omitted*/
 
     int possibleValues[9] = {0};
     int possibleValuesCount = getPossibleValues(board, row, col, possibleValues);
-    printf("possibleValuesCount: %d\n", possibleValuesCount);
     if (possibleValuesCount == 0) {
         return false;
     }
     for (int i = 0; i < possibleValuesCount; i++) {
         int value = possibleValues[i];
-        board[row][col] = intToChar(value);
-        printf("Trying value %d at row %d, col %d\n", value, row, col);
-
         board[row][col] = intToChar(value);
         //add num value to potential square, col, row tracking arrays for performance benefits
         if (solveRecursive(board, nextrow, nextcol)) {
