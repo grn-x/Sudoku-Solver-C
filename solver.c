@@ -44,11 +44,10 @@ char intToChar(int value) {
 
 int colUsed(char board[9][9], int col) {
     int bits = 0;
-    for (int row = 0; col < 9; col++) {
+    for (int row = 0; row < 9; row++) {  // Fixed: increment row
         int value = tileValue(board, row, col);
         if (value != -1) {
-            // Set the corresponding bit (0 for number 1, 1 for number 2, etc.)
-            bits |= (1 << value); // value times left shift + bitwise OR assign
+            bits |= (1 << value);
         }
     }
     return bits;
@@ -71,8 +70,13 @@ int squareUsed(char board[9][9], int row, int col){
 //get top left tile:
 
 // x= 0,1,2 -> 0; 3,4,5 -> 1; 6,7,8 -> 2
-int top = row - (row % 3)/3;
-int left = col - (col % 3)/3;
+//int top = row - (row % 3)/3; // (x/3)*3
+//int left = col - (col % 3)/3;
+
+int top = (row / 3) * 3;
+int left = (col / 3) * 3;
+
+
 int bits = 0;
 
 for (int i = 0; i < 3; i++) {
@@ -94,12 +98,12 @@ int getPossibleValues(char board[9][9], int row, int col, int possibleValuesRef[
     /* get all possible values for a tile */
     int possibleBits = ~(colUsed(board, col) | rowUsed(board, row) | squareUsed(board, row, col));
     //or all the bits together and invert the result to get the possible values
-    int possibleValues[9] = {0};
+        //possibleValuesRef = {0}; want to reinitialize the array, to avoid errors
     int index_pointer = 0;
     for (int i = 0; i < 9; i++) { //TODO: move this loop inside solveRecursive function, to avoid looping twice (even be it with a smaller range)
         if ((possibleBits >> i & 1) == 0) {//rightshift to move the i-th bit to the last place; AND with 1 (=0001) to
                                            // check if it is 1, in which case its a possible value
-            possibleValues[index_pointer++] = i;
+            possibleValuesRef[index_pointer++] = i;
         } else {
             //possibleValues[i] = 0;
         }
