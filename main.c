@@ -88,6 +88,7 @@ int main(int argc, char* argv[]) {
     char board[9][9];
     initBlankBoard(board);
     presetBoard(board, preset_two); // expects a function pointer to any of the preset functions
+    // TODO: add a preset function that allows for user input, or at least preset selection during runtime
     printBoard(board);
 
 
