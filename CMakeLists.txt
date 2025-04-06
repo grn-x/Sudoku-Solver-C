@@ -6,6 +6,8 @@ set(CMAKE_C_STANDARD 11)  # 23
 add_executable(sudoku
         main.c
         solver.c
+        interactive.c
+        interactive.h
 )
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall")
