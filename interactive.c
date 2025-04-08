@@ -51,7 +51,7 @@ char* get_current_directory() {
     return result;
 }
 
-int main() { //test functionality
+/*int main() { //test functionality
     char* current_dir = get_current_directory();
     if (current_dir) {
         printf("Current directory: %s\n", current_dir);
@@ -64,4 +64,4 @@ int main() { //test functionality
     open_in_default_editor("approve.txt");
 
     return 0;
-}
+}*/
