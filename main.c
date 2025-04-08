@@ -70,13 +70,64 @@ void preset_custom(char board[9][9], const char blank_tile) {
     strcat(path, filename);
 
 
+    FILE* fp_write = fopen(path, "w");
+    if (fp_write) {
+        fprintf(fp_write, "Configure a custom board here, save the file\nand press enter in the console to continue.\n\n");
 
+        //board like in the printBoard function
+        fprintf(fp_write, "+-----------------------+\n");
+        for (int row = 0; row < 9; row++) {
+            fprintf(fp_write, "| ");
+            for (int col = 0; col < 9; col++) {
+                fprintf(fp_write, "%c ", board[row][col]);
+                if (col % 3 == 2 && col != 8) {
+                    fprintf(fp_write, "| ");
+                }
+            }
+            fprintf(fp_write, "|\n");
+            if (row % 3 == 2 && row != 8) {
+                fprintf(fp_write, "|-----------------------|\n");
+            }
+        }
+        fprintf(fp_write, "+-----------------------+\n");
 
-    FILE* fp = fopen(path, "w");
-    if (fp) {
-        fprintf(fp, "Change Case \n");
-        fclose(fp);
+        fclose(fp_write);
     }
+
+
+
+    //wait for user confirmation
+    getchar();
+
+
+
+    //reread the file
+    //extract every line that starts with '|' and is followed not by a '-'
+    FILE* fp_read = fopen(path, "r");
+    if (fp_read) {
+        char line[256];
+        int row = 0;
+
+        while (fgets(line, sizeof(line), fp_read) && row < 9) {
+            // while current col index < read line length
+            // check if the line starts with '|', if not, skip, check for '-' and skip
+            // keep track of read numbers, skip anything thats not a 1 digit number, avoid 0
+            // count empty_tiles for correct column index
+
+
+            for (int col = 0; col < 9; col++) {
+                if (line[col * 2] != '|' && line[col * 2] != ' ') {
+                    board[row][col] = line[col * 2];
+                }
+            }
+            row++;
+        }
+        fclose(fp_read);
+    } else {
+        printf("Failed to open file for reading.\n");
+    }
+
+
     free(path);
 
 
