@@ -95,33 +95,56 @@ void preset_custom(char board[9][9], const char blank_tile) {
     }
 
 
+    open_in_default_editor(path);
 
+    printf("\nPress enter to continue after saving the file.\n");
     //wait for user confirmation
+    getchar(); // consume the newline character left in the buffer
     getchar();
 
 
 
     //reread the file
-    //extract every line that starts with '|' and is followed not by a '-'
+    //extract every line that starts with '|' and is not followed by a '-'
     FILE* fp_read = fopen(path, "r");
     if (fp_read) {
-        char line[256];
+        char line_buf[256];
         int row = 0;
 
-        while (fgets(line, sizeof(line), fp_read) && row < 9) {
-            // while current col index < read line length
+        while (fgets(line_buf, sizeof(line_buf), fp_read)) {
+            // skip lines not starting with '|' or containing '-'
+            if (line_buf[0] != '|' || line_buf[1] == '-') {
+                continue;
+            }
+
+            int col = 0;
+            // start from position 2 (after "| ")
+            for (int i = 2; line_buf[i] != '\0' && col < 9; i++) {
+                // skip separators and spaces
+                if (line_buf[i] == '|' || line_buf[i] == ' ') {
+                    continue;
+                }
+
+                // check if character is digit or blank tile
+                if ((line_buf[i] >= '1' && line_buf[i] <= '9') || line_buf[i] == blank_tile) {
+                    board[row][col] = line_buf[i];
+                    col++;
+                }
+            }
+
+            if (col == 9) {
+                row++;
+            }
+        }
+
+
+
+
+        /*  // while current col index < read line length
             // check if the line starts with '|', if not, skip, check for '-' and skip
             // keep track of read numbers, skip anything thats not a 1 digit number, avoid 0
             // count empty_tiles for correct column index
-
-
-            for (int col = 0; col < 9; col++) {
-                if (line[col * 2] != '|' && line[col * 2] != ' ') {
-                    board[row][col] = line[col * 2];
-                }
-            }
-            row++;
-        }
+*/
         fclose(fp_read);
     } else {
         printf("Failed to open file for reading.\n");
