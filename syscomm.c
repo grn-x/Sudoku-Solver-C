@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+
 void open_in_default_editor(const char *filename) {
 #ifdef _WIN32
     char cmd[256];

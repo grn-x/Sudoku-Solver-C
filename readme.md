@@ -7,22 +7,24 @@ A simple Sudoku solver implemented in C, using backtracking and bitmasking techn
 
 ### Prerequisites
 - C compiler (e.g., GCC)
-- fuck make and cmake honestly
 
 ### Run
 
 ```shell
-gcc main.c solver.c -o sudoku
+gcc main.c solver.c syscomm.c -o sudoku
 ./sudoku
 ```
 
 
 ## Overview
-The solving logic is written in the `solver.c` file.
-`main.c` is an abstracted console interaction layer and serves as the entry point.
+The project is structured three different files.
+`main.c` serves as the entry point of the program, responsible for initializing the `solver.c` state and handling/delegating user input.
+In case of custom board input, `main.c` manages os-specific file I/O operations through `syscomm.c`.
 
-Currently only hardcoded sudoku fields can be read. (This is subject to change, should I revisit this project).
-See the `main.c` preset methods
+> [!IMPORTANT]  
+> As a result of this `syscomm.c` needs to be recompiled for each OS. 
+
+<!-- The `syscomm.c` file contains the logic for an interactive way to interface with the programm during runtime, which allows users to input Sudoku puzzles and view the solutions. -->
 
 
 ## Motivation
@@ -36,9 +38,9 @@ If you're gonna commit the sin of brute-forcing, at least have some honor and do
 This solver implementation uses a dull brute force strategy instead of the much more elegant `Dancing Links` procedure as used in `Knuth's Algorithm X`
 The board is represented by a 9x9 char array. 
 
-For filling the tiles most efficiently, possible number candidates are created and then inserted, instead of iterating
+For filling the tiles most efficiently, possible number candidates are first calculated and then inserted, instead of iterating
 over all numbers and checking if they are valid.
-To achieve this, a bitmask is used to represent the possible candidates for each tile.
+To achieve this, a bitmask representing the possible candidates for each tile, is used
 
 
 ## License

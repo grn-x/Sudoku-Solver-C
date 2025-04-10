@@ -3,7 +3,7 @@
 #include <string.h>
 
 #include "solver.h"
-#include "interactive.h"
+#include "syscomm.h"
 
 
 
@@ -197,7 +197,7 @@ int main(int argc, char* argv[]) {
     initBlankBoard(board, blank_tile);
 
 
-    printf("\tUse 1 for example 1\n\tUse 2 for example 2\n\tUse 3 for the worst possible backtracking layout\n\tUse 4 for a custom board\n");
+    printf("\tUse 1 for preset 1 (= fast)\n\tUse 2 for preset 2 (= medium)\n\tUse 3 for preset 3 (= slowest; worst possible backtracking layout)\n\tUse 4 for a custom board\n");
 
     int option;
     printf("Type a number: \n");
@@ -205,25 +205,22 @@ int main(int argc, char* argv[]) {
 
     switch (option) {
         case 1:
-            printf("Preset 1\n");
+            printf("Preset 1 chosen\n");
             presetBoard(board, blank_tile, preset_one);
             break;
         case 2:
-            printf("Preset 2\n");
+            printf("Preset 2 chosen\n");
             presetBoard(board,  blank_tile, preset_two);
             break;
         case 3:
-            printf("Preset hardest\n");
+            printf("Preset 3 chosen\n");
             presetBoard(board,  blank_tile, preset_hard);
             break;
         default:
-            printf("Custom board\n");
+            printf("Custom board chosen\n");
             presetBoard(board, blank_tile, preset_custom);
     }
 
-
-    //presetBoard(board, preset_two); // expects a function pointer to any of the preset functions
-    // TODO: add a preset function that allows for user input, or at least preset selection during runtime
 
 
     printBoard(board);
@@ -231,7 +228,7 @@ int main(int argc, char* argv[]) {
     if (solve(board, blank_tile)) {
         printBoard(board);
     } else {
-        printf("Board is not solvable!");
+        printf("Board is not solvable!"); //TODO currently not properly returning in some unsolvable cases
         return 1;
     }
     return 0;
