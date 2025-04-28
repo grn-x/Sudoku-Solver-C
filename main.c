@@ -156,6 +156,30 @@ void preset_custom(char board[9][9], const char blank_tile) {
 
 }
 
+
+void presetString(char board[9][9], const char blank_tile) {
+    char input[82]; // 9x9 characters + 1 for null terminator
+    printf("Enter a string of 81 characters (digits 1-9 for numbers, anything else for blank tiles):\n");
+    scanf("%81s", input); // prevent buffer overflow :D
+
+    if (strlen(input) != 81) {
+        printf("Invalid input! Please provide exactly 81 characters.\n");
+        return;
+    }
+
+    int index = 0;
+    for (int row = 0; row < 9; row++) {
+        for (int col = 0; col < 9; col++) {
+            char current = input[index++];
+            if (current >= '1' && current <= '9') {
+                board[row][col] = current; // valid
+            } else {
+                board[row][col] = blank_tile; // else blank
+            }
+        }
+    }
+}
+
 //expects a function pointer to a preset function
 void presetBoard(char board[9][9], const char blank_tile, void (*preset_func)(char[9][9], char)) {
 
@@ -197,7 +221,7 @@ int main(int argc, char* argv[]) {
     initBlankBoard(board, blank_tile);
 
 
-    printf("\tUse 1 for preset 1 (= fast)\n\tUse 2 for preset 2 (= medium)\n\tUse 3 for preset 3 (= slowest; worst possible backtracking layout)\n\tUse 4 for a custom board\n");
+    printf("\tUse 1 for preset 1 (= fast)\n\tUse 2 for preset 2 (= medium)\n\tUse 3 for preset 3 (= slowest; worst possible backtracking layout)\n\tUse 4 when entering a board combination as plain 81 char String\n\tUse 5 for a custom board\n");
 
     int option;
     printf("Type a number: \n");
@@ -215,6 +239,10 @@ int main(int argc, char* argv[]) {
         case 3:
             printf("Preset 3 chosen\n");
             presetBoard(board,  blank_tile, preset_hard);
+            break;
+        case 4:
+            printf("Custom String preset chosen\n");
+            presetBoard(board, blank_tile, presetString);
             break;
         default:
             printf("Custom board chosen\n");
