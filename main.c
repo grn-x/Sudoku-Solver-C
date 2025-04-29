@@ -213,6 +213,17 @@ void printBoard(char board[9][9]) {
     printf("+-----------------------+\n");
 }
 
+void printBoardString(char board[9][9]) {
+    printf("Board as string:\n");
+    for (int row = 0; row < 9; row++) {
+        for (int col = 0; col < 9; col++) {
+            printf("%c", board[row][col]);
+        }
+    }
+    printf("\n");
+
+}
+
 
 
 int main(int argc, char* argv[]) {
@@ -252,9 +263,11 @@ int main(int argc, char* argv[]) {
 
 
     printBoard(board);
+    printBoardString(board);
 
     if (solve(board, blank_tile)) {
         printBoard(board);
+        printBoardString(board);
     } else {
         printf("Board is not solvable!"); //TODO currently not properly returning in some unsolvable cases
         return 1;
